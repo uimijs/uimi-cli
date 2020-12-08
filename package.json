@@ -1,5 +1,5 @@
 {
-  "name": "meui-cli",
+  "name": "@uimi/cli",
   "version": "1.0.0",
   "bin": {
     "meui-cli": "bin/service.js"
