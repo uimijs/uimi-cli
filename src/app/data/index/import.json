@@ -1,0 +1,10 @@
+{
+    "title": "云僖OA",
+    "plugin": [
+        "vue",
+        "yunxiapi",
+        "meui",
+        "perfect-scrollbar",
+        "font-awesome"
+    ]
+}

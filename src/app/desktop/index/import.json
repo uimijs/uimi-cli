@@ -1,0 +1,9 @@
+{
+  "title": "云僖OA",
+  "plugin": [
+    "vue",
+    "yunxiapi",
+    "meui",
+    "font-awesome"
+  ]
+}

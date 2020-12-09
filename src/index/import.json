@@ -1,0 +1,13 @@
+{
+    "title": "云僖OA",
+    "plugin": [
+        "vue",
+        "vue-router",
+        "yunxiapi",
+        "meui",
+        "perfect-scrollbar",
+        "font-awesome",
+        "dinglogin",
+        "dingtalk-open"
+    ]
+}
