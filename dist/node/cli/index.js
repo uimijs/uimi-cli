@@ -1,18 +1,15 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var path = require('path');
-var glob = _interopDefault(require('glob'));
-var webpack = _interopDefault(require('webpack'));
+var glob = require('glob');
+var webpack = require('webpack');
 var vueLoader = require('vue-loader');
-var MiniCssExtractPlugin = _interopDefault(require('mini-css-extract-plugin'));
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var vue = require('vue');
 var serverRenderer = require('@vue/server-renderer');
-var fs = _interopDefault(require('fs'));
-var ExternalModules = _interopDefault(require('webpack/lib/ExternalModule'));
+var fs = require('fs');
 require('webpack-merge');
-var WebpackDevServer = _interopDefault(require('webpack-dev-server'));
+var WebpackDevServer = require('webpack-dev-server');
 
 /**
  *  dev-server配置
@@ -95,43 +92,17 @@ class ExtHtmlWebpackPlugin {
   constructor(options) {
     this.options = options;
     //p2
-    this.externalModules = {};
   }
   apply(compiler) {
     //return
     //获取项目入口entry map配置
     this.entry = compiler.options.entry;
-    const normalModuleFactory = this.normalModuleFactoryCallback.bind(this);
     const emit = this.emitCallback.bind(this);
     if (compiler.hooks) {
-      compiler.hooks.normalModuleFactory.tap(PLUGIN, normalModuleFactory);
       compiler.hooks.emit.tap(PLUGIN, emit);
     } else {
-      compiler.plugin('normalModuleFactory', normalModuleFactory);
       compiler.plugin('emit', emit);
     }
-  }
-  normalModuleFactoryCallback(normalModuleFactory) {
-    // parser 将代码转换为语法书 判断有无 import
-    normalModuleFactory.hooks.parser.for('javascript/auto').tap('AutoExternalPlugin', (parser, parserOptions) => {
-      parser.hooks.import.tap('AutoExternalPlugin', (statement, source) => {
-      });
-    });
-    // factory 是创建模块的方法
-    // data 是创建模块的参数
-    normalModuleFactory.hooks.factory.tap(PLUGIN, factory => (data, callback) => {
-      const dependencies = data.dependencies;
-      const value = dependencies[0].request; // vue
-      //console.log(value)
-      if (value == "vue") {
-        const varName = "Vue";
-        //this.externalModules[dependencies[0].originModule.resource].push(value)
-        //console.log("你引用了这个插件", value, dependencies[0].originModule.resource)
-        callback(null, new ExternalModules(varName, 'window'));
-      } else {
-        factory(data, callback);
-      }
-    });
   }
   emitCallback(compilation, callback) {
     //console.log("测试",compilation["autopath"])
@@ -318,4 +289,3 @@ if (process.argv.includes('server')) {
     console.log('Starting server on http://localhost:' + devServer.port);
   });
 }
-//# sourceMappingURL=index.js.map
